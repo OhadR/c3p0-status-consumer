@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <!-- cron>
+    <url>/dispatcher?action=ShouldCreateWaveFrontendHandler</url>
+    <description>Check if a new wave should be generated</description>
+    <schedule>every 1 minutes</schedule>
+  </cron>
+    <cron>
+    <url>/dispatcher?action=ShouldAddParticipantFrontendHandler</url>
+    <description>Check if a new participant should be added to a wave</description>
+    <schedule>every 10 hours</schedule>
+  </cron-->
+  
+  <cron>
+    <url>/cron/calcAveragesAndGrades</url>
+    <description>calc averages and grades</description>
+    <schedule>every 10 minutes</schedule>
+  </cron>  
+
+  <cron>
+    <url>/cron/recordStatistics</url>
+    <description>record weekly traffic</description>
+    <schedule>every monday 05:00</schedule>
+  </cron>  
+  
+  <!-- 
+  <cron>
+    <url>/cron/handleNotSeenForaWhileUsers</url>
+    <description>record users that haven't been logging in for a while</description>
+    <schedule>01 of month 01:00</schedule>
+  </cron>
+   -->  
+  
+</cronentries>
