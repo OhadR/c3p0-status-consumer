@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.ohadr.c3p0_status_consumer.MonitorConnectionPoolsTask;
 
 
 @Controller("consumerWebController")
