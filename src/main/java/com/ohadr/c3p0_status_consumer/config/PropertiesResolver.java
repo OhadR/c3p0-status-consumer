@@ -6,31 +6,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class PropertiesResolver
 {
-//	@Value("${com.ohadr.auth-flows.linksExpirationMinutes}")
-	private int linksExpirationMinutes;
-
-//	@Value("${com.ohadr.auth-flows.isREST}")
-	private boolean isREST;
+	@Value("${com.ohadr.c3p0-status-consumer.test-mode}")
+	private boolean testMode;
 	
 	@Value("${com.ohadr.c3p0-status-consumer.target-url}")
 	private String targetHost;
-	
-	@Value("${com.ohadr.c3p0-status-consumer.history-file}")
-	private String historyFileName;
-	
-	public int getLinksExpirationMinutes()
-	{
-		return linksExpirationMinutes;
-	}
 
-	public void setLinksExpirationMinutes(int linksExpirationMinutes)
-	{
-		this.linksExpirationMinutes = linksExpirationMinutes;
-	}
+	@Value("${com.ohadr.c3p0-status-consumer.num-days-for-file}")
+	private int numDaysForFile;
 	
-	public boolean isREST() 
+
+	public boolean isTestMode() 
 	{
-		return isREST;
+		return testMode;
 	}
 	
 	public String getTargetHost()
@@ -38,11 +26,10 @@ public class PropertiesResolver
 		return targetHost;
 	}
 
-	public String getHistoryFileName()
+	public int getNumDaysForFile()
 	{
-		return historyFileName;
+		return numDaysForFile;
 	}
-
 
 }
 
