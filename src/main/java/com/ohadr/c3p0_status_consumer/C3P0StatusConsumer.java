@@ -11,6 +11,14 @@ import com.ohadr.c3p0_status_consumer.MonitorConnectionPoolsTask;
 import com.ohadr.c3p0_status_consumer.config.PropertiesResolver;
 
 
+/**
+ * this class is a Spring's component, and upon initializing it starts a {@link java.util.Timer} and calls
+ * periodically to {@link MonitorConnectionPoolsTask} which is Runnable, and in its run() method
+ * it samples the c3p0 status
+ * 
+ * @author ohadr
+ *
+ */
 @Component
 public class C3P0StatusConsumer implements InitializingBean
 {
