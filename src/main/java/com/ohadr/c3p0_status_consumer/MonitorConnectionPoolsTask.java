@@ -22,7 +22,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 	private static final int READ_TIME_OUT = 100000;
 	private static final int CONNECTION_TIME_OUT = 100000;
 	private static final String GET_CONN_POOL_STATUS_URL = "/connPoolStatus";
-	private static final String PATH_TO_TOMCAT_WORK_DIR = File.separator + "work" + File.separator;
+	private static final String PATH_TO_TOMCAT_WORK_DIR = System.getProperty("user.dir") + File.separator + "work" + File.separator;
 
 	private static Logger log = Logger.getLogger(MonitorConnectionPoolsTask.class);
 	private RestTemplate restTemplate = createRestTemplate();
@@ -80,9 +80,11 @@ public class MonitorConnectionPoolsTask extends TimerTask
 				calendar.add( Calendar.DAY_OF_MONTH, properties.getNumDaysForFile() );
 				if( calendar.before(now) )
 				{
-					//TODO create a new file:
-				}
-				
+					//create a new file:
+					ICSVWriter csvFile = fileAndFileCreationDatePair.getLeft();
+					csvFile.close();
+					csvFile = createCsvFileForDataSource( cps.dataSourceName, now );
+				}				
 			}
 			
 			
@@ -109,7 +111,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 	{
 		log.info("creating CSV file " + dataSourceName);
 
-		ICSVWriter csvFile = new CSVWriter( /*PATH_TO_TOMCAT_WORK_DIR +*/ dataSourceName + "_" + now.getTime() + ".csv" );
+		ICSVWriter csvFile = new CSVWriter( PATH_TO_TOMCAT_WORK_DIR + dataSourceName + "_" + now.getTime() + ".csv" );
 		String headerFields = "date,numConnections,numIdleConnections,numBusyConnections,numConnectionsAllUsers,numIdleConnectionsAllUsers,numBusyConnectionsAllUsers,numThreadsAwaitingCheckoutDefaultUser,numUnclosedOrphanedConnections";
 		csvFile.writeLine( Arrays.asList(headerFields.split(",")) );
 		return csvFile;
