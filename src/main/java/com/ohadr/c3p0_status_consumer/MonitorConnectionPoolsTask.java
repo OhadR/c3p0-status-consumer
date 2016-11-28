@@ -107,7 +107,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 		
 	}
 
-	private ICSVWriter createCsvFileForDataSource(String dataSourceName, Date now)
+	private static ICSVWriter createCsvFileForDataSource(String dataSourceName, Date now)
 	{
 		log.info("creating CSV file " + dataSourceName);
 
