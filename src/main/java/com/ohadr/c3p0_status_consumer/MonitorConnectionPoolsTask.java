@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import com.ohadr.c3p0_status_consumer.config.PropertiesResolver;
 import com.ohadr.c3p0_status_consumer.utils.Utils;
@@ -49,14 +49,14 @@ public class MonitorConnectionPoolsTask extends TimerTask
 		{
 			jsonResult = restTemplate.getForObject(properties.getTargetHost() + GET_CONN_POOL_STATUS_URL, String.class);
 		}
-		catch(ResourceAccessException rae)
+		catch(RestClientException rce)
 		{
-			log.error("error getting response from remote host (" + properties.getTargetHost() + ")", rae);
+			log.error("error getting response from remote host (" + properties.getTargetHost() + ")", rce);
 			if(properties.isTestMode())
 				jsonResult = 
 				"{\"collection\":[{\"numBusyConnections\":0,\"numBusyConnectionsAllUsers\":0,\"numIdleConnections\":0,\"numIdleConnectionsAllUsers\":0,\"numConnections\":0,\"numConnectionsAllUsers\":0,\"numThreadsAwaitingCheckoutDefaultUser\":0,\"numUnclosedOrphanedConnections\":0,\"dataSourceName\":\"testDS\"}]}";	
 			else
-				throw rae;
+				throw rce;
 		}
 		log.info("result: " + jsonResult);
 		
