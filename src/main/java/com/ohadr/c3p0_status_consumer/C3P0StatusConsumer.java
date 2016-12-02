@@ -38,7 +38,7 @@ public class C3P0StatusConsumer implements InitializingBean
 		// This task is scheduled to run every 10 seconds
 
 		log.info("starting");
-		t.scheduleAtFixedRate(mTask, 0, 30000);
+		t.scheduleAtFixedRate(mTask, 0, properties.getSampleRateSeconds() * 1000);
 
 	}
 

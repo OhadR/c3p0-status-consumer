@@ -14,6 +14,10 @@ public class PropertiesResolver
 
 	@Value("${com.ohadr.c3p0-status-consumer.num-days-for-file}")
 	private int numDaysForFile;
+
+	//defines the interval between each sample, in seconds
+	@Value("${com.ohadr.c3p0-status-consumer.sample-rate-seconds}")
+	private int sampleRateSeconds;
 	
 
 	public boolean isTestMode() 
@@ -29,6 +33,11 @@ public class PropertiesResolver
 	public int getNumDaysForFile()
 	{
 		return numDaysForFile;
+	}
+
+	public int getSampleRateSeconds()
+	{
+		return sampleRateSeconds;
 	}
 
 }
