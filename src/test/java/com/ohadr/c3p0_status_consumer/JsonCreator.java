@@ -2,7 +2,7 @@ package com.ohadr.c3p0_status_consumer;
 
 import java.util.ArrayList;
 import org.junit.Test;
-import com.ohadr.c3p0_status_consumer.utils.Utils;
+import com.ohadr.c3p0_status_consumer.utils.JsonUtils;
 import com.who.tlv.mars.common.ConnectionPoolStatus;
 import com.who.tlv.mars.common.ConnectionPoolStatusCollection;
 
@@ -17,7 +17,7 @@ public class JsonCreator
 		ConnectionPoolStatus status = new ConnectionPoolStatus();
 		status.dataSourceName = "testDS";
 		connectionPoolStatusCollection.collection.add(status);
-		String connectionPoolStatusCollectionJson = Utils.convertToJson( connectionPoolStatusCollection );
+		String connectionPoolStatusCollectionJson = JsonUtils.convertToJson( connectionPoolStatusCollection );
 		System.out.println(connectionPoolStatusCollectionJson);
 	}
 

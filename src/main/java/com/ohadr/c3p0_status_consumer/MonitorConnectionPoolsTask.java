@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import com.ohadr.c3p0_status_consumer.config.PropertiesResolver;
-import com.ohadr.c3p0_status_consumer.utils.Utils;
+import com.ohadr.c3p0_status_consumer.utils.JsonUtils;
 import com.who.tlv.foundation.csv.CSVWriter;
 import com.who.tlv.foundation.csv.ICSVWriter;
 import com.who.tlv.mars.common.ConnectionPoolStatus;
@@ -60,7 +60,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 		}
 		log.info("result: " + jsonResult);
 		
-		ConnectionPoolStatusCollection connectionPoolStatus = Utils.convertFromJson( jsonResult, ConnectionPoolStatusCollection.class );
+		ConnectionPoolStatusCollection connectionPoolStatus = JsonUtils.convertFromJson( jsonResult, ConnectionPoolStatusCollection.class );
 		for(ConnectionPoolStatus cps : connectionPoolStatus.collection)
 		{
 			Pair<ICSVWriter, Date> fileAndFileCreationDatePair = dataSourceNameToFileMap.get( cps.dataSourceName );
