@@ -96,12 +96,6 @@
 
         
         <dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.9.1</version>
-		</dependency>
-		
-        <dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
 			<version>4.4.1</version>
@@ -112,6 +106,13 @@
 			<artifactId>who-foundation</artifactId>
 			<version>8.5.0-SNAPSHOT</version>
         </dependency>
+        
+        <dependency>
+			<groupId>com.ohadr</groupId>
+			<artifactId>ohadr.commons</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+        </dependency>
+        
 
         		
 		<!-- Pair impl-->

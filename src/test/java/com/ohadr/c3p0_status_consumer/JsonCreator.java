@@ -2,7 +2,7 @@ package com.ohadr.c3p0_status_consumer;
 
 import java.util.ArrayList;
 import org.junit.Test;
-import com.ohadr.c3p0_status_consumer.utils.JsonUtils;
+import com.ohadr.common.utils.JsonUtils;
 import com.who.tlv.mars.common.ConnectionPoolStatus;
 import com.who.tlv.mars.common.ConnectionPoolStatusCollection;
 
