@@ -1,7 +1,5 @@
 package com.ohadr.c3p0_status_consumer;
 
-import java.io.File;
-import java.util.Date;
 import java.util.Timer;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
