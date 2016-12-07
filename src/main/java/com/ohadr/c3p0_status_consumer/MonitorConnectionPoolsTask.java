@@ -52,11 +52,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 		catch(RestClientException rce)
 		{
 			log.error("error getting response from remote host (" + properties.getTargetHost() + ")", rce);
-			if(properties.isTestMode())
-				jsonResult = 
-				"{\"collection\":[{\"numBusyConnections\":0,\"numBusyConnectionsAllUsers\":0,\"numIdleConnections\":0,\"numIdleConnectionsAllUsers\":0,\"numConnections\":0,\"numConnectionsAllUsers\":0,\"numThreadsAwaitingCheckoutDefaultUser\":0,\"numUnclosedOrphanedConnections\":0,\"dataSourceName\":\"testDS\"}]}";	
-			else
-				throw rce;
+			return;
 		}
 		log.info("result: " + jsonResult);
 		

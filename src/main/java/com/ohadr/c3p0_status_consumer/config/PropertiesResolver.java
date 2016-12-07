@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class PropertiesResolver
 {
-	@Value("${com.ohadr.c3p0-status-consumer.test-mode}")
-	private boolean testMode;
+//	@Value("${com.ohadr.c3p0-status-consumer.test-mode}")
+//	private boolean testMode;
 	
 	@Value("${com.ohadr.c3p0-status-consumer.target-url}")
 	private String targetHost;
@@ -20,11 +20,6 @@ public class PropertiesResolver
 	private int sampleRateSeconds;
 	
 
-	public boolean isTestMode() 
-	{
-		return testMode;
-	}
-	
 	public String getTargetHost()
 	{
 		return targetHost;
