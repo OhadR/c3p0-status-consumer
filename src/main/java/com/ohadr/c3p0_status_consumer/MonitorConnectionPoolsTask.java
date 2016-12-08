@@ -3,7 +3,6 @@ package com.ohadr.c3p0_status_consumer;
 import java.io.File;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
@@ -33,7 +32,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 	private PropertiesResolver properties;
 	
 	//map from the file name to a pair of <CSV file object, file creation date> :
-	private Map<String, Pair<ICSVWriter, Date> > dataSourceNameToFileMap = new HashMap<String, Pair<ICSVWriter, Date> >();
+	private Map<String, Map.Entry<ICSVWriter, Date> > dataSourceNameToFileMap = new HashMap<String, Map.Entry<ICSVWriter, Date> >();
 	
 	private RestTemplate createRestTemplate()
 	{
@@ -61,18 +60,18 @@ public class MonitorConnectionPoolsTask extends TimerTask
 		ConnectionPoolStatusCollection connectionPoolStatus = JsonUtils.convertFromJson( jsonResult, ConnectionPoolStatusCollection.class );
 		for(ConnectionPoolStatus cps : connectionPoolStatus.collection)
 		{
-			Pair<ICSVWriter, Date> fileAndFileCreationDatePair = dataSourceNameToFileMap.get( cps.dataSourceName );
+			Map.Entry<ICSVWriter, Date> fileAndFileCreationDatePair = dataSourceNameToFileMap.get( cps.dataSourceName );
 			Date now = new Date();
 			if(fileAndFileCreationDatePair == null)
 			{
 				ICSVWriter csvFile = createCsvFileForDataSource( cps.dataSourceName, now );
-				fileAndFileCreationDatePair = Pair.of(csvFile, now);
+				fileAndFileCreationDatePair = new AbstractMap.SimpleEntry<ICSVWriter, Date>(csvFile, now);
 				dataSourceNameToFileMap.put(cps.dataSourceName, fileAndFileCreationDatePair );
 			}
 			else
 			{
 				//check if need to create a new file (as max period elapsed):
-				Date fileCreationDate = fileAndFileCreationDatePair.getRight();
+				Date fileCreationDate = fileAndFileCreationDatePair.getValue();
 				long fileCreationDateMsecs = fileCreationDate.getTime();
 
 				long milis = fileCreationDateMsecs + TimeUnit.DAYS.toMillis( properties.getNumDaysForFile() );
@@ -80,10 +79,16 @@ public class MonitorConnectionPoolsTask extends TimerTask
 
 				if( now.after( creationDatePlusInterval ) )
 				{
-					//create a new file:
-					ICSVWriter csvFile = fileAndFileCreationDatePair.getLeft();
+					dataSourceNameToFileMap.remove( cps.dataSourceName );
+
+					//close existing file:
+					ICSVWriter csvFile = fileAndFileCreationDatePair.getKey();
 					csvFile.close();
+
+					//create a new file:
 					csvFile = createCsvFileForDataSource( cps.dataSourceName, now );
+					fileAndFileCreationDatePair = new AbstractMap.SimpleEntry<ICSVWriter, Date>(csvFile, now);
+					dataSourceNameToFileMap.put(cps.dataSourceName, fileAndFileCreationDatePair );
 				}				
 			}
 			
@@ -99,7 +104,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 			line.add( String.valueOf( cps.numThreadsAwaitingCheckoutDefaultUser ) );
 			line.add( String.valueOf( cps.numUnclosedOrphanedConnections ) );
 
-			ICSVWriter csvFile = fileAndFileCreationDatePair.getLeft();
+			ICSVWriter csvFile = fileAndFileCreationDatePair.getKey();
 			csvFile.writeLine( line );
 			csvFile.flush();
 			log.debug("*** " + cps);
