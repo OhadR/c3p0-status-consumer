@@ -2,6 +2,7 @@ package com.ohadr.c3p0_status_consumer;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 	private static final int CONNECTION_TIME_OUT = 100000;
 	private static final String GET_CONN_POOL_STATUS_URL = "/connPoolStatus";
 	private static final String PATH_TO_TOMCAT_WORK_DIR = System.getProperty("user.dir") + File.separator + "work" + File.separator;
+	
 
 	private static Logger log = Logger.getLogger(MonitorConnectionPoolsTask.class);
 	private RestTemplate restTemplate = createRestTemplate();
@@ -71,10 +73,12 @@ public class MonitorConnectionPoolsTask extends TimerTask
 			{
 				//check if need to create a new file (as max period elapsed):
 				Date fileCreationDate = fileAndFileCreationDatePair.getRight();
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTime( fileCreationDate );
-				calendar.add( Calendar.DAY_OF_MONTH, properties.getNumDaysForFile() );
-				if( calendar.before(now) )
+				long fileCreationDateMsecs = fileCreationDate.getTime();
+
+				long milis = fileCreationDateMsecs + TimeUnit.DAYS.toMillis( properties.getNumDaysForFile() );
+				Date creationDatePlusInterval = new Date( milis ); 
+
+				if( creationDatePlusInterval.after(now) )
 				{
 					//create a new file:
 					ICSVWriter csvFile = fileAndFileCreationDatePair.getLeft();
