@@ -78,7 +78,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 				long milis = fileCreationDateMsecs + TimeUnit.DAYS.toMillis( properties.getNumDaysForFile() );
 				Date creationDatePlusInterval = new Date( milis ); 
 
-				if( creationDatePlusInterval.after(now) )
+				if( now.after( creationDatePlusInterval ) )
 				{
 					//create a new file:
 					ICSVWriter csvFile = fileAndFileCreationDatePair.getLeft();
