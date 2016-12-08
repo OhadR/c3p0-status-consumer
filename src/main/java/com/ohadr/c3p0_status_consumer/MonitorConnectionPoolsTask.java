@@ -44,7 +44,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 
 	public void getConnPoolStatus()
 	{
-		log.info("get Conn-Pool Status from " + properties.getTargetHost() + "...");
+		log.trace("get Conn-Pool Status from " + properties.getTargetHost() + "...");
 		String jsonResult = null;
 		try
 		{
@@ -55,7 +55,6 @@ public class MonitorConnectionPoolsTask extends TimerTask
 			log.error("error getting response from remote host (" + properties.getTargetHost() + ")", rce);
 			return;
 		}
-		log.info("result: " + jsonResult);
 		
 		ConnectionPoolStatusCollection connectionPoolStatus = JsonUtils.convertFromJson( jsonResult, ConnectionPoolStatusCollection.class );
 		for(ConnectionPoolStatus cps : connectionPoolStatus.collection)
@@ -79,6 +78,8 @@ public class MonitorConnectionPoolsTask extends TimerTask
 
 				if( now.after( creationDatePlusInterval ) )
 				{
+					log.info("it is time to roll the file for " + cps.dataSourceName);
+
 					dataSourceNameToFileMap.remove( cps.dataSourceName );
 
 					//close existing file:
