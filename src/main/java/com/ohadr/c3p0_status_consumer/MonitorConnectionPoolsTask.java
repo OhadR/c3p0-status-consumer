@@ -10,11 +10,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import com.ohadr.c3p0_status_consumer.config.PropertiesResolver;
+import com.ohadr.common.types.c3p0.ConnectionPoolStatus;
+import com.ohadr.common.types.c3p0.ConnectionPoolStatusCollection;
 import com.ohadr.common.utils.JsonUtils;
 import com.who.tlv.foundation.csv.CSVWriter;
 import com.who.tlv.foundation.csv.ICSVWriter;
-import com.who.tlv.mars.common.ConnectionPoolStatus;
-import com.who.tlv.mars.common.ConnectionPoolStatusCollection;
 
 @Component
 public class MonitorConnectionPoolsTask extends TimerTask
@@ -44,7 +44,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 
 	public void getConnPoolStatus()
 	{
-		log.trace("get Conn-Pool Status from " + properties.getTargetHost() + "...");
+		log.debug("get Conn-Pool Status from " + properties.getTargetHost() + "...");
 		String jsonResult = null;
 		try
 		{
@@ -108,7 +108,7 @@ public class MonitorConnectionPoolsTask extends TimerTask
 			ICSVWriter csvFile = fileAndFileCreationDatePair.getKey();
 			csvFile.writeLine( line );
 			csvFile.flush();
-			log.debug("*** " + cps);
+			log.trace("*** " + cps);
 		}
 		
 	}
