@@ -5,9 +5,9 @@
       <pattern>%d{dd MMM yyyy HH:mm:ss} %-4r [%t] %-5p %c %x - %m%n</pattern>
     </encoder>
   </appender>
-  <logger name="org.springframework" level="ERROR"/>
-  <logger name="org.hibernate" level="ERROR"/>
-  <logger name="org.apache" level="ERROR"/>
+  <logger name="org.springframework" level="INFO"/>
+  <logger name="org.hibernate" level="INFO"/>
+  <logger name="org.apache" level="INFO"/>
   <root level="DEBUG">
     <appender-ref ref="A1"/>
   </root>
