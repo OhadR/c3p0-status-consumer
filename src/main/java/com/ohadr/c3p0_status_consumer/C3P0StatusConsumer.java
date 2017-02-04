@@ -39,18 +39,4 @@ public class C3P0StatusConsumer implements InitializingBean
 		t.scheduleAtFixedRate(mTask, 0, properties.getSampleRateSeconds() * 1000);
 
 	}
-
-
-	public void start()
-	{
-		Timer t = new Timer();
-		MonitorConnectionPoolsTask mTask = new MonitorConnectionPoolsTask();
-		// This task is scheduled to run every 10 seconds
-
-		t.scheduleAtFixedRate(mTask, 0, 10000);
-
-	}
-
-	
-
 }
