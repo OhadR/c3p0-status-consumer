@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Test;
+import com.ohadr.common.types.c3p0.ConnectionPoolStatus;
+import com.ohadr.common.types.c3p0.ConnectionPoolStatusCollection;
 import com.ohadr.common.utils.JsonUtils;
-import com.who.tlv.mars.common.ConnectionPoolStatus;
-import com.who.tlv.mars.common.ConnectionPoolStatusCollection;
 
 public class JsonCreator
 {
