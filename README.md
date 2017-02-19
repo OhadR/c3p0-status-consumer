@@ -11,10 +11,7 @@ In addition, it stores the data in a CSV file (each data-source has its own CSV 
 
 
 
-Configuration
-=============
- 
-properties
+Configuration | properties
 ----------
 **com.ohadr.c3p0-status-consumer.target-url** - 
 
